@@ -26,7 +26,7 @@ namespace Application.Implementations
             try
             {
                 string url = _settings.HttpSettings.ApiMetaUrl + $"/{message.SenderPhoneId}/messages";
-                string token = _settings.HttpSettings.TokenMeta;
+                string token = _settings.HttpSettings.MetaAccessKey;
                 string messageProduct = _settings.CommunicationSettings.MessageProduct;
                 string recipientType = _settings.CommunicationSettings.RecipientType;
                 string messageType = _settings.CommunicationSettings.MessageType;
@@ -102,7 +102,7 @@ namespace Application.Implementations
             try
             {
                 string url = _settings.HttpSettings.ApiModelUrl;
-                string token = _settings.HttpSettings.TokenGoogle;
+                string token = _settings.HttpSettings.GoogleApiKey;
 
                 using StreamReader reader = new StreamReader("..\\BusinessCommunication\\prompt.txt");
 

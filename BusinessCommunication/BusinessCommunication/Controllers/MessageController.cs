@@ -30,7 +30,7 @@ namespace BusinessCommunication.Controllers
             [FromQuery(Name = "hub.verify_token")] string verify_token
         )
         {
-            if (verify_token.Equals(_settings.HttpSettings.TokenKeyMeta))
+            if (verify_token.Equals(_settings.HttpSettings.MetaKeyId))
             {
                 return challenge;
             }
