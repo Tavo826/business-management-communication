@@ -2,7 +2,7 @@
 {
     public class GoogleSheetsSettings
     {
-        public string ApplicationId { get; set; } = string.Empty;
-        public string ApplicationKey { get; set; } = string.Empty;
+        public string AppIdentifier { get; set; } = string.Empty;
+        public string AppCredential { get; set; } = string.Empty;
     }
 }

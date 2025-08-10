@@ -20,8 +20,8 @@ namespace Adapter
         public StockAdapter(IOptions<Settings> settings)
         {
             _settings = settings.Value;
-            _googleClientId = _settings.CommunicationSettings.GoogleSheetsSettings.ApplicationId;
-            _googleClientSecret = _settings.CommunicationSettings.GoogleSheetsSettings.ApplicationKey;
+            _googleClientId = _settings.CommunicationSettings.GoogleSheetsSettings.AppIdentifier;
+            _googleClientSecret = _settings.CommunicationSettings.GoogleSheetsSettings.AppCredential;
 
             _userCredential = GoogleAuthentication.Login(_googleClientId, _googleClientSecret, _scopes);
         }
