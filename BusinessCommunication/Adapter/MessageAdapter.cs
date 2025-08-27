@@ -4,6 +4,7 @@ using Domain.Dtos.Response;
 using Domain.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Http.Json;
 
 namespace Adapter
 {
@@ -185,3 +186,4 @@ namespace Adapter
 
         }
     }
+}
