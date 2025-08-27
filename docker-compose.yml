@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  business-persistence:
+    build: .
+    container_name: business-persistence
+    ports:
+      - "${PORT}:8080"
+    environment:
+      - Settings__BusinessCommunication__ApplicationName=${Settings__BusinessCommunication__ApplicationName}
+      - Settings__HttpSettings__ApiMetaUrl=${Settings__HttpSettings__ApiMetaUrl}
+      - Settings__HttpSettings__BusinessManagerPersistanceUrl=${Settings__HttpSettings__BusinessManagerPersistanceUrl}
+      - Settings__HttpSettings__ApiModelUrl=${Settings__HttpSettings__ApiModelUrl}
+      - Settings__HttpSettings__MetaAccessKey=${Settings__HttpSettings__MetaAccessKey}
+      - Settings__HttpSettings__MetaKeyId=${Settings__HttpSettings__MetaKeyId}
+      - Settings__HttpSettings__GoogleApiKey=${Settings__HttpSettings__GoogleApiKey}
+      - Settings__CommunicationSettings__MessageProduct=${Settings__CommunicationSettings__MessageProduct}
+      - Settings__CommunicationSettings__RecipientType=${Settings__CommunicationSettings__RecipientType}
+      - Settings__CommunicationSettings__MessageType=${Settings__CommunicationSettings__MessageType}
+      - Settings__CommunicationSettings__GoogleSheetsSettings__AppIdentifier=${Settings__CommunicationSettings__GoogleSheetsSettings__AppIdentifier}
+      - Settings__CommunicationSettings__GoogleSheetsSettings__AppCredential=${Settings__CommunicationSettings__GoogleSheetsSettings__AppCredential}
+    restart: always
