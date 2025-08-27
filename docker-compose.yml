@@ -1,9 +1,9 @@
 version: '3.9'
 
 services:
-  business-persistence:
+  business-communication:
     build: .
-    container_name: business-persistence
+    container_name: business-communication
     ports:
       - "${PORT}:8080"
     environment:
