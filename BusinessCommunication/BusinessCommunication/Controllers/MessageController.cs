@@ -22,6 +22,17 @@ namespace BusinessCommunication.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetApiStatus()
+        {
+            return Ok(new ResponseDto<string>
+            {
+                Success = true,
+                Message = "Status OK!",
+                StatusCode = (int)HttpStatusCode.OK,
+            });
+        }
+
+        [HttpGet]
         [Route("webhook")]
         public string Webhook(
             [FromQuery(Name = "hub.mode")] string mode,
