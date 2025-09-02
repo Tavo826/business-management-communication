@@ -4,7 +4,7 @@ services:
   business-communication:
     build: .
     container_name: business-communication
-    ports:
+    expose:
       - "${PORT}:8080"
     volumes:
       - ./BusinessCommunication/BusinessCommunication/prompt.txt:/app/prompt.txt:ro
@@ -21,3 +21,37 @@ services:
       - Settings__CommunicationSettings__MessageType=${Settings__CommunicationSettings__MessageType}
       - Settings__CommunicationSettings__GoogleSheetsSettings__ServiceAccountJson=${Settings__CommunicationSettings__GoogleSheetsSettings__ServiceAccountJson}
     restart: always
+    networks:
+      - webnet
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    depends_on:
+      - business-communication
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    networks:
+      - webnet
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    entrypoint: >
+      sh -c "trap exit TERM; while :; do
+        certbot renew --webroot -w /var/www/certbot --quiet;
+        sleep 12h & wait $${!};
+      done"
+
+networks:
+  webnet:
+    driver: bridge

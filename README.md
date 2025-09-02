@@ -9,6 +9,76 @@ ngrok -v
 ngrok http 5275
 ```
 
+### AWS deploy config
+
+sudo yum update -y
+sudo dnf install dotnet-sdk-8.0 -y
+sudo yum install docker git -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+sudo curl -SL https://github.com/docker/compose/releases/download/v2.39.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+git clone https://github.com/Tavo826/business-management-communication
+
+nano .env
+
+sudo docker-compose up -d --build
+
+rm -rf business-management-persistence
+
+mkdir -p certbot/www
+mkdir -p certbot/conf
+
+mkdir -p nginx/conf.d
+nano nginx/conf.d/default.conf
+
+
+**Nginx config - ./nginx/conf.d/default.conf**
+
+´´´
+server {
+    listen 80;
+    server_name customermanagement.top;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name customermanagement.top;
+
+    ssl_certificate /etc/letsencrypt/live/customermanagement.top/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/customermanagement.top/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://business-communication:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+´´´
+
+docker-compose up -d business-communication nginx
+
+docker run --rm -it -v $(pwd)/certbot/www:/var/www/certbot -v $(pwd)/certbot/conf:/etc/letsencrypt certbot/certbot certonly --webroot --webroot-path=/var/www/certbot --email 9gagigor816@gmail.com --agree-tos --no-eff-email -d customermanagement.top
+
+docker-compose restart nginx
+
+
+
 ### Endpoints 
 
 1. **Name:** Webhook  
