@@ -104,7 +104,7 @@ namespace Adapter
                 string url = _settings.HttpSettings.ApiModelUrl;
                 string token = _settings.HttpSettings.GoogleApiKey;
 
-                using StreamReader reader = new StreamReader("..\\BusinessCommunication\\prompt.txt");
+                using StreamReader reader = new StreamReader("prompt.txt");
 
                 var systemPrompt = await reader.ReadToEndAsync();
 

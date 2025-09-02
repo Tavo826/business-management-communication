@@ -6,6 +6,8 @@ services:
     container_name: business-communication
     ports:
       - "${PORT}:8080"
+    volumes:
+      - ./BusinessCommunication/prompt.txt:/app/prompt.txt:ro
     environment:
       - Settings__BusinessCommunication__ApplicationName=${Settings__BusinessCommunication__ApplicationName}
       - Settings__HttpSettings__ApiMetaUrl=${Settings__HttpSettings__ApiMetaUrl}
