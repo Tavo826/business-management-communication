@@ -11,19 +11,17 @@ namespace Adapter
     public class StockAdapter : IStockAdapter
     {
         private readonly Settings _settings;
-        private readonly string _googleClientId;
-        private readonly string _googleClientSecret;
-        private readonly UserCredential _userCredential;
-
+        private readonly GoogleCredential _googleCredential;
         private readonly string[] _scopes = { SheetsService.Scope.Spreadsheets };
 
         public StockAdapter(IOptions<Settings> settings)
         {
             _settings = settings.Value;
-            _googleClientId = _settings.CommunicationSettings.GoogleSheetsSettings.AppIdentifier;
-            _googleClientSecret = _settings.CommunicationSettings.GoogleSheetsSettings.AppCredential;
 
-            _userCredential = GoogleAuthentication.Login(_googleClientId, _googleClientSecret, _scopes);
+            _googleCredential = GoogleAuthentication.FromServiceAccountJson(
+                _settings.CommunicationSettings.GoogleSheetsSettings.ServiceAccountJson,
+                _scopes
+            );
         }
 
         public async Task<IList<IList<object>>> GetStockData(string googleSpreadsheetId, string googleSpreadsheetName)
@@ -31,7 +29,7 @@ namespace Adapter
 
             try
             {
-                using (var sheetsService = new SheetsService(new BaseClientService.Initializer() { HttpClientInitializer = _userCredential }))
+                using (var sheetsService = new SheetsService(new BaseClientService.Initializer() { HttpClientInitializer = _googleCredential }))
                 {
                     var getValueRequest = sheetsService.Spreadsheets.Values.Get(googleSpreadsheetId, googleSpreadsheetName);
 

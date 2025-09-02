@@ -4,15 +4,12 @@ namespace Application.Utils
 {
     public static class GoogleAuthentication
     {
-        public static UserCredential Login(string googleClientId, string googleClientSecret, string[] scopes)
+        public static GoogleCredential FromServiceAccountJson(string serviceAccountJson, string[] scopes)
         {
-            ClientSecrets clientSecrets = new ClientSecrets()
-            {
-                ClientId = googleClientId,
-                ClientSecret = googleClientSecret,
-            };
-
-            return GoogleWebAuthorizationBroker.AuthorizeAsync(clientSecrets, scopes, "user", CancellationToken.None).Result;
+            var credential = GoogleCredential.FromJson(serviceAccountJson);
+            if (credential.IsCreateScopedRequired)
+                credential = credential.CreateScoped(scopes);
+            return credential;
         }
     }
 }

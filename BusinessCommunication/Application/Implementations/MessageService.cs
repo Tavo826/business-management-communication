@@ -11,15 +11,13 @@ namespace Application.Implementations
 {
     public class MessageService : IMessageService
     {
-        private readonly Settings _settings;
         private readonly IMessageAdapter _messageAdapter;
         private readonly IStockAdapter _stockAdapter;
         private readonly ILogger<MessageService> _logger;
         private readonly IMapper _mapper;
 
-        public MessageService(IOptions<Settings> settings, IMessageAdapter messageAdapter, IStockAdapter stockAdapter, ILogger<MessageService> logger, IMapper mapper)
+        public MessageService(IMessageAdapter messageAdapter, IStockAdapter stockAdapter, ILogger<MessageService> logger, IMapper mapper)
         {
-            _settings = settings.Value;
             _messageAdapter = messageAdapter;
             _stockAdapter = stockAdapter;
             _logger = logger;
