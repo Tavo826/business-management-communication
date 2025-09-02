@@ -17,6 +17,5 @@ services:
       - Settings__CommunicationSettings__MessageProduct=${Settings__CommunicationSettings__MessageProduct}
       - Settings__CommunicationSettings__RecipientType=${Settings__CommunicationSettings__RecipientType}
       - Settings__CommunicationSettings__MessageType=${Settings__CommunicationSettings__MessageType}
-      - Settings__CommunicationSettings__GoogleSheetsSettings__AppIdentifier=${Settings__CommunicationSettings__GoogleSheetsSettings__AppIdentifier}
-      - Settings__CommunicationSettings__GoogleSheetsSettings__AppCredential=${Settings__CommunicationSettings__GoogleSheetsSettings__AppCredential}
+      - Settings__CommunicationSettings__GoogleSheetsSettings__ServiceAccountJson=${Settings__CommunicationSettings__GoogleSheetsSettings__ServiceAccountJson}
     restart: always
